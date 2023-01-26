@@ -14,7 +14,7 @@ interface IProps {
 export const DisplayTime = ({ rawTime, format }: IProps) => {
   const [time, setTime] = useState<string>('')
 
-  const getTimeDuration = useCallback(
+  const getTimeDurationCallback = useCallback(
     (rawTime: string, format: string): string => {
       const now = dayjs()
 
@@ -25,12 +25,12 @@ export const DisplayTime = ({ rawTime, format }: IProps) => {
 
       return `${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s ago`
     },
-    [setTime]
+    [rawTime]
   )
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(getTimeDuration(rawTime, format))
+      setTime(getTimeDurationCallback(rawTime, format))
     }, 1000)
 
     return () => clearInterval(interval)
